@@ -11,7 +11,7 @@ export class MapContainer extends Component {
         zoom={14}
         initialCenter={{
          lat: -1.2884,
-         lng: 36.8233
+         lng: 45.9246
         }}
       />
     );
