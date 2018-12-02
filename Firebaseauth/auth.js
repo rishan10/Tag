@@ -1,9 +1,11 @@
 
-// Get the modal
-var modal = document.getElementById('id01');
 
-// When the user clicks anywhere outside of the modal, close it
+
+// When the user clicks on signup, we get the fields for password, username
 document.getElementById("signup").onclick = function(event) {
-	pwd = document.getElementById("userPassword").value
-    console.log(pwd)
+	pwd = document.getElementById("userPassword").value;
+	console.log(document.getElementById("userEmail").value)
+
+    // console.log("User's email: " + email);
+    console.log("User's password: " + pwd);
 }
