@@ -13,7 +13,7 @@ render() {
         zoom={20}
         initialCenter={{
          lat: 34.068840, 
-         lng: -118.442849  
+         lng: -118.442849
         }}
       />
     );
