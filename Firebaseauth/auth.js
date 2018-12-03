@@ -13,6 +13,9 @@
   var tagApp = firebase.initializeApp(config); //object for the app itself
   // console.log("App name: " + defaultApp.name)
   var user = firebase.auth().currentUser; //object for the current user, null if no user is logged into the app
+  
+  //function that specifies what to after a user has been created and logged in, or logs back in
+  //maybe takes the user into the app?
   function proceed(name, code=3) {
   	switch(code) {
   		case 0:
