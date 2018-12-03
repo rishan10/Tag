@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
+import ReactDOM from 'react-dom';
 import './Map.css';
 //import { Person } from './person.js';
 
@@ -44,7 +45,7 @@ export class MapContainer extends Component {
     return (
       <Map className="Map"
         google={this.props.google}
-        zoom={14}
+        zoom={20}
         center={this.state.myLatLng }
       >
 
@@ -58,8 +59,6 @@ export class MapContainer extends Component {
     this.getLocation()
   }
 }
-
-
 
 export default GoogleApiWrapper({
   apiKey: 'AIzaSyBEzajaiAQbefAv9ZT_m6NKJQibsEqzBoc'

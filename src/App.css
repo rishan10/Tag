@@ -27,3 +27,40 @@
   box-shadow: 0 0 15px #595959;
   z-index: 999;
 }
+
+.title {
+  position: relative;
+  width: 100%;
+  text-align: center;
+  margin-top: 0;
+  top: 0;
+  font-size: 2em;
+  margin-bottom: .4em;
+}
+
+.titleNI {
+  color: #c4e3ed;
+}
+
+.titleI {
+  top: -2.2em;
+  color: #ff8080;
+}
+
+.tag-button {
+  margin:auto;
+  width: 5em;
+  height:2em;
+  border-radius: 1em;
+  background-color: #ff8080;
+  text-align: center;
+  font-size: 1.6em;
+  padding-bottom: .9em;
+  color:white;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px #505050;
+}
+
+.tag-button:active {
+  box-shadow: none;
+  background-color: #ff6666;
+}
