@@ -24,6 +24,7 @@ export class MapContainer extends Component {
   getLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
+                //TODO update firebase
                 this.setState({
                         myLatLng: {
                             lat: position.coords.latitude,
