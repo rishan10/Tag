@@ -12,7 +12,7 @@
   };
   var tagApp = firebase.initializeApp(config); //object for the app itself
   // console.log("App name: " + defaultApp.name)
-  var user = firebase.auth().currentUser; //object for the current user, null if no user is logged into the app
+  var user; //object for the current user, null if no user is logged into the app
   
   //function that specifies what to after a user has been created and logged in, or logs back in
   //maybe takes the user into the app?
@@ -36,14 +36,20 @@
 //no checks on the email, so need to make sure it's valid when inputting
   function signup(name, email, password) {
 
-  	firebase.auth().createUserWithEmailAndPassword(email, password).then(function(credential){
+  	firebase.auth().createUserWithEmailAndPassword(email, password).then(async function(credential){
   		console.log(name + "being added...")
-  		// while(!user) {
-  		// 	//this needs to be fixed!!
-  		// }
-
+		user = await firebase.auth().currentUser;
   		if(user != null) {
-			user.displayName = name
+			user.updateProfile({
+				displayName: name
+			}).then(function() {
+				console.log("Name updated to: " + user.displayName)
+			}).catch(function(error) {
+				var errorCode = error.code;
+				var errorMessage = error.message;
+				console.log("Error code: " + errorCode)
+				console.log("Error message: " + errorMessage)
+			});
   		}
   		proceed(name, 0);
   	}).catch(function(error) {
@@ -62,8 +68,9 @@
  //function used to sign in already existing users in the database
  //again this requires email and password but there are no checks to ensure that email is formatted well
  function signin(email, password,name="noname") {
- 	firebase.auth().signInWithEmailAndPassword(email, password).then(function(credential){
- 		if(user != null) {
+ 	firebase.auth().signInWithEmailAndPassword(email, password).then(async function(credential){
+		user = await firebase.auth().currentUser; 
+		if(user != null) {
 			name = user.displayName
  		}
  		
@@ -110,6 +117,7 @@ document.getElementById("signin").onclick = function(event) {
 
 // }
 
+//get currently signed in user
 // firebase.auth().onAuthStateChanged(function(user) {
 // 	if(user) {
 // 		//user is currently signed in
