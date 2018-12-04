@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import MapContainer from './Map.js';
-import ReactDOM from 'react-dom'
-import logo from './logo.svg';
 import './tag.css';
 
 class Tag extends Component {

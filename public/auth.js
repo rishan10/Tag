@@ -109,6 +109,8 @@ document.getElementById("signup").onclick = function(event) {
 	email = document.getElementById("userEmail").value
 	name = document.getElementById("userName").value
 
+  localStorage.setItem('username', name);
+
     signup(name, email, pwd)
 
 }
@@ -117,7 +119,9 @@ document.getElementById("signup").onclick = function(event) {
 document.getElementById("signin").onclick = function(event) {
 	pwd = document.getElementById("signInPassword").value
 	email = document.getElementById("signInEmail").value
-	// name = document.getElementById("userName").value
+	name = document.getElementById("userName").value
+
+  localStorage.setItem('username', name);
 
     signin(email, pwd)
 

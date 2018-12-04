@@ -37,10 +37,16 @@ export class MapContainer extends Component {
               lng: 0
           }
     };
+
+
+    var username = localStorage.getItem('username')
+    console.log("username: " + username)
+
     // p is a place holder, we will pass the current user into the constructor once we
     // integrate auth with the normal app
     this.currentUser = person
   }
+
   getLocation() {
         //putData(this.currentUser.username, {latitude: this.state.myLatLng.lat , longitude:this.state.myLatLng.lng})
         if (navigator.geolocation) {
