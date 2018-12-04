@@ -16,6 +16,18 @@ var config = {
   };
 var database = firebase.initializeApp(config).database();
 var userRefs = database.ref("users") 
+var currentUser = null
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    // User is signed in.
+    currentUser = user
+    console.log(currentUser.displayName + " is currently logged in!")
+  } else {
+    // No user is signed in.
+    currentUser = null
+  }
+});
+
 
 function putData(location, username) {
     var ref = userRefs.push({username:username, location:location}, function() {
