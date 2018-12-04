@@ -10,9 +10,19 @@
     storageBucket: "tag-app-3ea59.appspot.com",
     messagingSenderId: "501192940886"
   };
-  var tagApp = firebase.initializeApp(config); //object for the app itself
+  var database = firebase.initializeApp(config).database(); //object for the app itself
+  var userRefs = database.ref("users")
   // console.log("App name: " + defaultApp.name)
   var user; //object for the current user, null if no user is logged into the app
+  
+  function putData(location, username) {
+    var ref = userRefs.push({username:name, location:location}, function() {
+          console.log("Location added");
+          }).catch(function(error) {
+        console.log(error);
+        });
+    return ref
+  }
   
   //function that specifies what to after a user has been created and logged in, or logs back in
   //maybe takes the user into the app?
@@ -21,6 +31,11 @@
   		case 0:
   			console.log(name + " was successfully created and logged in!")
   			window.alert(name + " was successfully created and logged in!")
+        var ref = userRefs.push({username:name, location:{latitude:0, longitude:0}}, function() {
+          console.log("Location added");
+          }).catch(function(error) {
+        console.log(error);
+        });
         window.location.href = '/home'
   			break;
   		case 1:

@@ -7,7 +7,7 @@ import { Person } from './person.js';
 
 export class MapContainer extends Component {
   
-  constructor(){
+  constructor(p){
     
     super();
     this.state = {
@@ -18,10 +18,10 @@ export class MapContainer extends Component {
     };
     // p is a place holder, we will pass the current user into the constructor once we
     // integrate auth with the normal app
-    var p = new Person("ankith", "123", "audf") 
     this.currentUser = p
   }
   getLocation() {
+        
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
                 //TODO update firebase
