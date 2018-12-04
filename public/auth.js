@@ -21,11 +21,12 @@
   		case 0:
   			console.log(name + " was successfully created and logged in!")
   			window.alert(name + " was successfully created and logged in!")
+        window.location.href = '/home'
   			break;
   		case 1:
   			console.log(name + " was successfully logged in!")
   			window.alert(name + " was successfully logged in!")
-        window.location.href = '/home';
+        window.location.href = '/home'
   			break;
   		default:
   			console.log("no code provided")
