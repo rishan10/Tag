@@ -1,19 +1,15 @@
 import React, { Component } from 'react';
 import MapContainer from './Map.js';
-import ReactDOM from 'react-dom'
-import logo from './logo.svg';
+import Tag from './tag.js';
+import {
+  BrowserRouter as Router,
+  Route,
+} from 'react-router-dom';
+import SignIn from './Firebaseauth/SignIn.js';
+import * as ROUTES from './routes.js';
 import './App.css';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {isIt: false};
-    this.makeIt = this.makeIt.bind(this)
-  }
-
-  makeIt() {
-    this.setState({isIt: true});
-  }
 
   render() {
     return (
@@ -21,16 +17,12 @@ class App extends Component {
         <header className="App-header">
           Geo-Tag
         </header>
-        <MapContainer />
-        <div className="menu">
-          <div className="notIt" style={{visibility: this.state.isIt ? 'hidden' : 'visible'}}>
-            <h2 className="title titleNI">You're Not It</h2>
-            <div className="tag-button" onClick={this.makeIt}>Push if Tagged</div>
+        <Router>
+          <div>
+          <Route exact path={ROUTES.SIGNIN} component={SignIn}/>
+          <Route path={ROUTES.HOME} component={Tag}/>
           </div>
-          <div className="it" style={{visibility: this.state.isIt ? 'visible' : 'hidden' }}>
-            <h2 className="title titleI">You're It</h2>
-          </div>
-        </div>
+        </Router>
       </div>
     );
   }
