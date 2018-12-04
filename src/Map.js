@@ -45,25 +45,44 @@ export class MapContainer extends Component {
             );
         }
     }
-
-  render() {
+    // getAllUsersData(nextPageToken) {
+    //   admin.auth().listUsers(1000, nextPageToken)
+    //     .then(function(listUsersResult) {
+    //         listUsersResult.users.forEach(function(userRecord) {
+    //         console.log("user", userRecord.toJSON());
+    //       });
+    //       if (listUsersResult.pageToken) {
+    //     // List next batch of users.
+    //         listAllUsers(listUsersResult.pageToken)
+    //       }
+    //   })
+    //   .catch(function(error) {
+    //     console.log("Error listing users:", error);
+    //   });
+    // }
+    render() {
     
-    return (
-      <Map className="Map"
-        google={this.props.google}
-        zoom={20}
-        center={this.state.myLatLng }
-      >
+      return (
+        <Map className="Map"
+          google={this.props.google}
+          zoom={20}
+          center={this.state.myLatLng }
+        >
 
-      <Marker 
-        position= { this.state.myLatLng }  name={'Your Position'}/>
-      </Map>
-    );
-  }
+        <Marker 
+          position= { this.state.myLatLng }  name={'Your Position'}/>
+        </Map>
+      );
+    }
 
-  componentDidMount() {
-    this.getLocation()
-  }
+    componentDidMount() {
+      this.getLocation()
+      this.interval = setInterval(() => this.getLocation(), 1000);
+    }
+
+    componentWillUnmount() {
+      clearInterval(this.interval);
+    }
 }
 
 export default GoogleApiWrapper({
