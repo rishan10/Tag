@@ -15,14 +15,7 @@
   // console.log("App name: " + defaultApp.name)
   var user; //object for the current user, null if no user is logged into the app
   
-  function putData(location, username) {
-    var ref = userRefs.push({username:name, location:location}, function() {
-          console.log("Location added");
-          }).catch(function(error) {
-        console.log(error);
-        });
-    return ref
-  }
+  
   
   //function that specifies what to after a user has been created and logged in, or logs back in
   //maybe takes the user into the app?
@@ -31,11 +24,13 @@
   		case 0:
   			console.log(name + " was successfully created and logged in!")
   			window.alert(name + " was successfully created and logged in!")
-        var ref = userRefs.push({username:name, location:{latitude:0, longitude:0}}, function() {
-          console.log("Location added");
+        var child = userRefs.child(user.uid);
+        var ref = child.push({username:name, location:{latitude:0, longitude:0}}, function() {
+          console.log("LOCATION ADDED");
           }).catch(function(error) {
         console.log(error);
         });
+        console.log(ref);
         window.location.href = '/home'
   			break;
   		case 1:
@@ -67,6 +62,7 @@
 				console.log("Error code: " + errorCode)
 				console.log("Error message: " + errorMessage)
 			});
+      localStorage.setItem('uid', user.uid);
   		}
   		proceed(name, 0);
   	}).catch(function(error) {
@@ -89,6 +85,7 @@
 		user = await firebase.auth().currentUser; 
 		if(user != null) {
 			name = user.displayName
+      localStorage.setItem('uid', user.uid);
  		}
  		
  		proceed(name, 1)

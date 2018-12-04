@@ -29,8 +29,11 @@ firebase.auth().onAuthStateChanged(function(user) {
 });
 
 
-function putData(location, username) {
-    var ref = userRefs.push({username:username, location:location}, function() {
+
+
+function putData(location, uid, username) {
+    var child = userRefs.child(uid);
+    var ref = child.set({username:username, location:location}, function() {
           console.log("Location added");
           }).catch(function(error) {
         console.log(error);
@@ -52,7 +55,11 @@ export class MapContainer extends Component {
 
 
     var username = localStorage.getItem('username')
+    var uid = localStorage.getItem("uid")
+    this.uid = uid
+    this.username = username
     console.log("username: " + username)
+    console.log("uid: " + uid)
 
     // p is a place holder, we will pass the current user into the constructor once we
     // integrate auth with the normal app
@@ -60,7 +67,7 @@ export class MapContainer extends Component {
   }
 
   getLocation() {
-        //putData(this.currentUser.username, {latitude: this.state.myLatLng.lat , longitude:this.state.myLatLng.lng})
+        putData({latitude: this.state.myLatLng.lat , longitude:this.state.myLatLng.lng}, this.uid, this.username)
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
                 //TODO update firebase
