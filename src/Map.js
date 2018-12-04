@@ -4,10 +4,31 @@ import ReactDOM from 'react-dom';
 import './Map.css';
 import { Person } from './person.js';
 
+import firebase from 'firebase'
+
+var config = {
+    apiKey: "AIzaSyDpcllNutF9qbJ0mp91aEZSPHOjAtLJoAw",
+    authDomain: "tag-app-3ea59.firebaseapp.com",
+    databaseURL: "https://tag-app-3ea59.firebaseio.com",
+    projectId: "tag-app-3ea59",
+    storageBucket: "tag-app-3ea59.appspot.com",
+    messagingSenderId: "501192940886"
+  };
+var database = firebase.initializeApp(config).database();
+var userRefs = database.ref("users") 
+
+function putData(location, username) {
+    var ref = userRefs.push({username:username, location:location}, function() {
+          console.log("Location added");
+          }).catch(function(error) {
+        console.log(error);
+        });
+    return ref
+}
 
 export class MapContainer extends Component {
   
-  constructor(p){
+  constructor(person){
     
     super();
     this.state = {
@@ -18,10 +39,10 @@ export class MapContainer extends Component {
     };
     // p is a place holder, we will pass the current user into the constructor once we
     // integrate auth with the normal app
-    this.currentUser = p
+    this.currentUser = person
   }
   getLocation() {
-        
+        //putData(this.currentUser.username, {latitude: this.state.myLatLng.lat , longitude:this.state.myLatLng.lng})
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
                 //TODO update firebase
@@ -45,21 +66,6 @@ export class MapContainer extends Component {
             );
         }
     }
-    // getAllUsersData(nextPageToken) {
-    //   admin.auth().listUsers(1000, nextPageToken)
-    //     .then(function(listUsersResult) {
-    //         listUsersResult.users.forEach(function(userRecord) {
-    //         console.log("user", userRecord.toJSON());
-    //       });
-    //       if (listUsersResult.pageToken) {
-    //     // List next batch of users.
-    //         listAllUsers(listUsersResult.pageToken)
-    //       }
-    //   })
-    //   .catch(function(error) {
-    //     console.log("Error listing users:", error);
-    //   });
-    // }
     render() {
     
       return (
