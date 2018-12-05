@@ -95,7 +95,7 @@
   		var errorMessage = error.message;
   		console.log("Error code: " + errorCode)
   		console.log("Error message: " + errorMessage)
-  		window.alert("Sign-in failed: " + errorMessage)
+  		window.alert("Sign-in failed ha gay: " + errorMessage)
   		// ...
 	});
  }

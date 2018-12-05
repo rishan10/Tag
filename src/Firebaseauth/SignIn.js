@@ -19,13 +19,13 @@ class SignIn extends Component {
             <input id= "userName" type="text" placeholder="name"/>
             <input id= "userPassword" type="password" placeholder="password"/>
             <input id="userEmail" type="text" placeholder="email address"/>
-            <button id= "signup">create</button>
+            <button type= "button" id= "signup">create</button>
             <p className="message">Already registered? <a href="#">Sign In</a></p>
           </form>
           <form className="login-form">
             <input id="signInEmail" type="text" placeholder="email"/>
             <input id= "signInPassword" type="password" placeholder="password"/>
-            <button id="signin">login</button>
+            <button type= "button" id="signin">login</button>
             <p className="message">Not registered? <a href="#">Create an account</a></p>
           </form>
         </div>
