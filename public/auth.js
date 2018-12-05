@@ -25,7 +25,7 @@
   			console.log(name + " was successfully created and logged in!")
   			window.alert(name + " was successfully created and logged in!")
         var child = userRefs.child(user.uid);
-        var ref = child.push({username:name, location:{latitude:0, longitude:0}}, function() {
+        var ref = child.push({username:name, location:{latitude:0, longitude:0}, tagged:0}, function() {
           console.log("LOCATION ADDED");
           }).catch(function(error) {
         console.log(error);

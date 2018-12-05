@@ -85,16 +85,19 @@ export class MapContainer extends Component {
         putData({latitude: this.state.myLatLng.lat , longitude:this.state.myLatLng.lng}, this.uid, this.username)
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
-                //TODO update firebase
-                this.setState({
-                        myLatLng: {
-                            lat: position.coords.latitude,
-                            lng: position.coords.longitude
-                        }
+                //updates firebase
+                var that = this;
+                firebase.database().ref('users/' + that.uid + '/location').once('value').then(function(snapshot){
+                  console.log(snapshot.val()) //snapshot.val() gives you longitude and latitude
+                  that.setState({
+                    myLatLng: {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
                     }
-                );
-            }, this.errorHandler)
-        } else {
+                  });
+                });
+            })
+        }  else {
             //browser doesn't support geolocation, set as empty
             window.alert("If you don't enable geolocation, our app won't work")
             this.setState({
