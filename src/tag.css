@@ -45,3 +45,44 @@
   box-shadow: none;
   background-color: #ff6666;
 }
+
+.signout {
+  position: absolute;
+  font-size: .5em;
+  top: 0.1em;
+  right: 1em;
+  color: grey;
+  font-size: 1em;
+  z-index: 999;
+  margin-top: 0;
+}
+
+.start-restart {
+  position: absolute;
+  font-size: 1em;
+  bottom: 0;
+  right: .3em;
+  z-index: 999;
+  color: white;
+}
+
+.clock {
+  position: absolute;
+  top: 0;
+  right: 5.4em;
+  z-index: 999;
+  color: lightblue;
+  font-size: 1.5em;
+  margin-top: 0;
+}
+
+.gameover {
+  position: absolute;
+  margin-top: 0;
+  bottom: 2em;
+  left: 3.2em;
+  font-size: 2em;
+  margin-bottom: .4em;
+  color: lightblue;
+  z-index: 999;
+}
