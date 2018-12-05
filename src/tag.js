@@ -30,7 +30,7 @@ class Tag extends Component {
 
   start() {
     this.setState({start: true})
-    var time = 180;
+    var time = 600;
     var _this = this
 
     var clock = setInterval(function(){
