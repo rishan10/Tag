@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Map, GoogleApiWrapper, Marker } from 'google-maps-react';
+import { google, Map, GoogleApiWrapper, Marker } from 'google-maps-react';
 import ReactDOM from 'react-dom';
 import './Map.css';
 import { Person } from './person.js';
@@ -27,6 +27,14 @@ firebase.auth().onAuthStateChanged(function(user) {
     currentUser = null
   }
 });
+const preObject = document.getElementById('object');
+const dbRefObject = firebase.database().ref().child('users');
+var jsonObj = null
+dbRefObject.on('value', data => {
+    jsonObj = data.val()
+    //console.log(jsonObj)
+    //console.log(preObject.innerText = JSON.stringify(data.val())) //gives back user data in JSON format
+});
 
 
 
@@ -43,9 +51,9 @@ function putData(location, uid, username) {
 
 export class MapContainer extends Component {
   
-  constructor(person){
+  constructor(props){
     
-    super();
+    super(props);
     this.state = {
           myLatLng: {
               lat: 0,
@@ -63,9 +71,16 @@ export class MapContainer extends Component {
 
     // p is a place holder, we will pass the current user into the constructor once we
     // integrate auth with the normal app
-    this.currentUser = person
+    this.locations = {}
+    this.locations[uid] = {latitude:this.state.myLatLng.lat, longitude:this.state.myLatLng.lng};
   }
-
+  errorHandler(err) {
+            if(err.code == 1) {
+               alert("Error: Access is denied!");
+            } else if( err.code == 2) {
+               alert("Error: Position is unavailable!");
+            }
+  }
   getLocation() {
         putData({latitude: this.state.myLatLng.lat , longitude:this.state.myLatLng.lng}, this.uid, this.username)
         if (navigator.geolocation) {
@@ -78,7 +93,7 @@ export class MapContainer extends Component {
                         }
                     }
                 );
-            })
+            }, this.errorHandler)
         } else {
             //browser doesn't support geolocation, set as empty
             window.alert("If you don't enable geolocation, our app won't work")
@@ -91,24 +106,56 @@ export class MapContainer extends Component {
             );
         }
     }
+    getDataFromDatabase() {
+      if (jsonObj != null) {
+        for (var key in jsonObj) {
+          var userinfo = jsonObj[key]
+          this.locations[key] = jsonObj[key].location;
+          
+        }
+      }
+    }
     render() {
+      var ar = []
+      for (var key in this.locations) {
+        if (this.locations[key] != {latitude:0, longitude:0}) {
+          ar.push({uid:key, locations:this.locations[key]})
+        }
+      }
+      console.log(ar)
+      let markers = ar.map(dealer => (
+      <Marker key = {dealer.uid}
+            name = {dealer.uid}
+            position={{
+              lat: dealer.locations.latitude,
+              lng: dealer.locations.longitude,
+            }}
     
+      />
+    ));
+    console.log(markers)
+
+      // var j = "";
+      // for (var item in ar){
+      //     var j += "<Marker ref={item} name={'Enemy'} position={{ lat: item.latitude, lng: item.longitude }}/>\n";
+      // }
       return (
         <Map className="Map"
           google={this.props.google}
           zoom={20}
           center={this.state.myLatLng }
         >
-
-        <Marker 
-          position= { this.state.myLatLng }  name={'Your Position'}/>
+        {markers}
         </Map>
+        
+
       );
     }
 
     componentDidMount() {
       this.getLocation()
       this.interval = setInterval(() => this.getLocation(), 1000);
+      this.interval2 = setInterval(() => this.getDataFromDatabase(), 10);
     }
 
     componentWillUnmount() {
